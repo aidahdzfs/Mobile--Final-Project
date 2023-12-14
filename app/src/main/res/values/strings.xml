@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">CineNova</string>
+    <string name="title">%s</string>
+    <string name="rating"> %s / 10</string>
+    <string name="release_date">Release Date : %s</string>
+    <string name="error">Page Not Found</string>
+    <string name="now_playing">NOW PLAYING</string>
+    <string name="time">%s - %s</string>
+</resources>
