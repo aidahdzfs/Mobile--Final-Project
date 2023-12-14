@@ -21,34 +21,26 @@ val Firasans = FontFamily(
 // Set of Material typography styles to start with
 val Typography = Typography(
     titleLarge = TextStyle(
-        fontFamily = Firasans,
+        fontFamily = AbrilFatface,
         fontWeight = FontWeight.Bold,
         fontStyle = FontStyle.Italic,
         fontSize = 36.sp
     ),
-    headlineSmall = TextStyle(
+    titleMedium =TextStyle(
         fontFamily = Firasans,
         fontWeight = FontWeight.Bold,
         fontStyle = FontStyle.Italic,
         fontSize = 30.sp
     ),
-    titleMedium = TextStyle(
-        fontFamily = AbrilFatface,
-        fontSize = 30.sp
-    ),
     titleSmall = TextStyle(
         fontFamily = AbrilFatface,
-        fontSize = 20.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = Firasans,
-        fontSize = 10.sp,
-        fontWeight = FontWeight.Bold
+        fontSize = 20.sp,
+        fontWeight = FontWeight.SemiBold
     ),
     bodyLarge = TextStyle(
         fontFamily = Firasans,
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp
+        fontSize = 18.sp
     )
     /* Other default text styles to override
     titleLarge = TextStyle(

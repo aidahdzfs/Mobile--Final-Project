@@ -12,12 +12,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -135,17 +138,17 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun FilmList(films: List<Film>) {
-        Column (modifier = Modifier){
+        Column (modifier = Modifier.padding(16.dp)){
             Spacer(modifier = Modifier.height(100.dp))
             Text(
                 text = stringResource(id = R.string.now_playing),
                 style = MaterialTheme.typography.titleMedium,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Start,
                 modifier = Modifier
                     .fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(16.dp))
-            LazyVerticalGrid(columns = GridCells.Fixed(2)){
+            LazyColumn(){
                 items(films) { film ->
                     FilmCard(film = film)
                 }
@@ -156,21 +159,22 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun FilmCard(film: Film) {
-        Card(
+        Box(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(8.dp)
                 .clickable {
                     val intent = Intent(this, DetailActivity::class.java)
                     intent.putExtra("film", film)
                     startActivity(intent)
                 },
-            shape = MaterialTheme.shapes.small
+            //shape = MaterialTheme.shapes.small,
         ) {
-            Column(
+            Row (
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            ) {
+                    .fillMaxSize()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.Center
+            ){
                 AsyncImage(
                     model = ImageRequest.Builder(context = LocalContext.current)
                         .data("https://image.tmdb.org/t/p/original" + film.poster_path)
@@ -178,35 +182,36 @@ class MainActivity : ComponentActivity() {
                         .build(),
                     contentDescription = film.title,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(MaterialTheme.shapes.medium),
+                        .width(150.dp),
                     contentScale = ContentScale.FillWidth,
                     error = painterResource(id = R.drawable.broken),
-                    placeholder = painterResource(id = R.drawable.loading)
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = film.title.toString(),
-                    style = MaterialTheme.typography.titleSmall,
+                    placeholder = painterResource(id = R.drawable.loading))
+                Column (
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxSize()
                         .padding(8.dp),
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    textAlign = TextAlign.Center
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = film.release_date.toString(),
-                    style = MaterialTheme.typography.bodyLarge,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth()
-                )
+                    verticalArrangement = Arrangement.Center
+                ){
+                    Text(
+                        text = stringResource(id = R.string.category),
+                        style = MaterialTheme.typography.bodyLarge,
+                        textAlign = TextAlign.Start,
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = film.title.toString(),
+                        style = MaterialTheme.typography.titleSmall,
+                        textAlign = TextAlign.Start
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = stringResource(id = R.string.rating, film.vote_average.toString()),
+                        style = MaterialTheme.typography.bodyLarge,
+                        textAlign = TextAlign.Start
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
 
-                // Other details like rating, genre, etc. can be added here
+                }
             }
         }
     }
